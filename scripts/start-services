@@ -16,6 +16,10 @@ do
     COMPOSE_FILES+=('-f ./compose-files/sentry/docker-compose.yml')
     shift
     ;;
+    -a|--staff)
+    COMPOSE_FILES+=('-f ./compose-files/staff/docker-compose.yml')
+    shift
+    ;;
   esac
 done
 

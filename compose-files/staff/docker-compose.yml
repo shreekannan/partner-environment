@@ -1,0 +1,42 @@
+version: "3.7"
+
+networks:
+  placeos_placeos:
+    external: true
+
+volumes:
+  postgres-data:
+
+services:
+
+  postgres:  # Database used by Staff API
+    image: postgres:${POSTGRES_VERSION:-13-alpine}
+    container_name: postgres
+    restart: unless-stopped
+    networks:
+      placeos:
+        ipv4_address: 172.31.231.17
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      TZ: $TZ
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+
+  staff:  # Staff API
+    image: placeos/staff-api:${STAFF_API_VERSION:-latest}
+    container_name: staff
+    restart: unless-stopped
+    networks:
+      placeos:
+        ipv4_address: 172.31.231.18
+    depends_on:
+      - postgres
+    external_links:
+      - "placeos.local:nginx"
+    env_file:
+      - .env.secret_key
+    environment:
+      STAFF_TIME_ZONE: $TZ
+      PG_DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/placeos"
+      PLACE_URI: "http://placeos.local"

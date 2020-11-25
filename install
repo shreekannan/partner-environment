@@ -19,6 +19,7 @@ Usage: ./install [options]
 install must be run from the root of the environment.
 
 Options:
+    -a, --staff                      Set up Staff API
     -e, --elk                        Set up ELK stack
     -s, --sentry                     Set up Sentry
 EOF
@@ -28,6 +29,7 @@ SERVICES=('')
 
 setup_elastic_stack=false
 setup_sentry=false
+setup_staff=false
 while [[ $# -gt 0 ]]
 do
   arg="$1"
@@ -40,6 +42,11 @@ do
     -s|--sentry)
     setup_sentry=true
     SERVICES+=('-s')
+    shift
+    ;;
+    -a|--staff)
+    setup_staff_api=true
+    SERVICES+=('-a')
     shift
     ;;
     -h |--help | *)
@@ -84,6 +91,12 @@ sleep 5
 
 echo "=== Running init container"
 ./scripts/run-init-container
+
+if [[ $setup_staff_api == "true" ]]
+then
+    echo "=== Setting up Staff API..."
+    PLACE_DOMAIN=placeos.local ./scripts/run-init-container
+fi
 
 echo -e "\n=== Setup complete. Login to https://$PLACE_DOMAIN/backoffice/ with"
 echo "$PLACE_EMAIL:$PLACE_PASSWORD"
