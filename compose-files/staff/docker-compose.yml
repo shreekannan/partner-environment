@@ -36,6 +36,7 @@ services:
       - "placeos.local:nginx"
     env_file:
       - .env.secret_key
+      - .env.public_key
     environment:
       STAFF_TIME_ZONE: $TZ
       PG_DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/placeos"
