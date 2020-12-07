@@ -33,11 +33,15 @@ services:
     depends_on:
       - postgres
     external_links:
-      - "placeos.local:nginx"
+      - "nginx:placeos.local"
     env_file:
       - .env.secret_key
       - .env.public_key
     environment:
       STAFF_TIME_ZONE: $TZ
       PG_DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/placeos"
-      PLACE_URI: "http://placeos.local"
+      PLACE_URI: "https://placeos.local"
+      PLACE_EMAIL: ${PLACE_EMAIL:-support@place.tech}
+      PLACE_PASSWORD: ${PLACE_PASSWORD:-development}
+      PLACE_AUTH_CLIENT_ID: "please_copy_and_paste_from_backoffice"
+      PLACE_AUTH_SECRET:    "please_copy_and_paste_from_backoffice"
