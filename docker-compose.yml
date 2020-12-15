@@ -113,6 +113,7 @@ services:
       - *jwt-secret
     environment:
       << : *rethinkdb-client-env
+      #<< : *https-proxy
       COAUTH_NO_SSL: "true"
       TZ: $TZ
 
