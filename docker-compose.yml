@@ -18,7 +18,7 @@ volumes:
 
 # YAML Anchors
 x-https-proxy: &https-proxy
-  HTTPS_PROXY: http://user@pass:proxy.url:port
+  #HTTPS_PROXY: http://user@pass:proxy.url:port
   NO_PROXY: 127.*,10.*,192.*,*.local
 
 x-deployment-env: &deployment-env
@@ -113,7 +113,7 @@ services:
       - *jwt-secret
     environment:
       << : *rethinkdb-client-env
-      #<< : *https-proxy
+      << : *https-proxy
       COAUTH_NO_SSL: "true"
       TZ: $TZ
 
@@ -136,7 +136,7 @@ services:
       << : *rethinkdb-client-env
       # Environment
       << : *deployment-env
-      #<< : *https-proxy
+      << : *https-proxy
 
   frontends: # Frontend deployment service
     image: placeos/frontends:${PLACE_FRONTENDS_TAG:-latest}
@@ -157,7 +157,7 @@ services:
       << : *rethinkdb-client-env
       # Environment
       << : *deployment-env
-      #<< : *https-proxy
+      << : *https-proxy
 
   source:
     image: docker.io/placeos/source:${PLACE_SOURCE_TAG:-latest}
