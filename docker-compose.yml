@@ -23,6 +23,10 @@ x-deployment-env: &deployment-env
   SG_ENV: ${SG_ENV:-development}
   TZ: $TZ
 
+x-edge-env: &edge-env
+  PLACE_EDGE_SECRET: ${PLACE_EDGE_SECRET:-ZWRnZTEyMzRfczNjcjN0}
+  PLACE_URI: ${PLACE_URI:-http://api:3000}
+
 x-jwt-public: &jwt-public .env.public_key
 
 x-jwt-secret: &jwt-secret .env.secret_key
@@ -137,6 +141,20 @@ services:
       << : *redis-client-env
       << : *rethinkdb-client-env
       # Environment
+      << : *deployment-env
+
+  edge: # Module coordinator
+    image: placeos/edge:${PLACE_EDGE_TAG:-latest}
+    restart: always
+    container_name: edge
+    hostname: edge
+    networks:
+      placeos:
+        ipv4_address: 172.31.231.20
+    depends_on:
+      - core
+    environment:
+      << : *edge-env
       << : *deployment-env
 
   frontends: # Frontend deployment service
