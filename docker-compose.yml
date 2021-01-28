@@ -233,7 +233,6 @@ services:
     restart: on-failure
     networks:
       placeos:
-        ipv4_address: 172.31.231.7
     depends_on:
       - rubber-soul
     environment:
