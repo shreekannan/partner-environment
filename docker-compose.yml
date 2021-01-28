@@ -306,7 +306,7 @@ services:
       TZ: $TZ
 
   etcd:
-    image: bitnami/etcd:${ETCD_VERSION:-3.3.13}
+    image: bitnami/etcd:${ETCD_VERSION:-3}
     restart: always
     container_name: etcd
     hostname: etcd
