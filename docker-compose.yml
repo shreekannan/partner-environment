@@ -150,7 +150,6 @@ services:
     hostname: edge
     networks:
       placeos:
-        ipv4_address: 172.31.231.20
     depends_on:
       - core
     environment:
