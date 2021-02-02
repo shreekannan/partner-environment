@@ -61,6 +61,9 @@ PLACE_DOMAIN=${PLACE_DOMAIN:="localhost:8443"}
 PLACE_EMAIL=${PLACE_EMAIL:="support@place.tech"}
 PLACE_PASSWORD=${PLACE_PASSWORD:="development"}
 
+# staff-api currently requires a slightly different nginx image
+$setup_staff_api == "true" && export PLACE_NGINX_TAG="staff-api"
+
 echo "=== Generating secrets..."
 ./scripts/generate-secrets
 
