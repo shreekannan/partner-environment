@@ -145,7 +145,7 @@ services:
 
   edge: # Module coordinator
     image: placeos/edge:${PLACE_EDGE_TAG:-latest}
-    restart: always
+    restart: no
     container_name: edge
     hostname: edge
     networks:
