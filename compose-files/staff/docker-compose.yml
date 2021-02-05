@@ -15,7 +15,6 @@ services:
     restart: unless-stopped
     networks:
       placeos:
-        ipv4_address: 172.31.231.17
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
@@ -29,7 +28,6 @@ services:
     restart: unless-stopped
     networks:
       placeos:
-        ipv4_address: 172.31.231.18
     depends_on:
       - postgres
     external_links:
