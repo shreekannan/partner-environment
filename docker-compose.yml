@@ -24,7 +24,7 @@ x-deployment-env: &deployment-env
   TZ: $TZ
 
 x-edge-env: &edge-env
-  PLACE_EDGE_SECRET: ${PLACE_EDGE_SECRET}
+  PLACE_EDGE_SECRET: ${PLACE_EDGE_SECRET:-}
   PLACE_URI: ${PLACE_URI:-http://api:3000}
 
 x-jwt-public: &jwt-public .env.public_key
@@ -61,11 +61,11 @@ x-rubber-soul-client-env: &rubber-soul-client-env
   RUBBER_SOUL_URI: ${RUBBER_SOUL_URI:-http://rubber-soul:3000}
 
 x-smtp-client-env: &smtp-client-env
-  SMTP_SERVER: ${SMTP_SERVER}
+  SMTP_SERVER: ${SMTP_SERVER:-}
   SMTP_PORT: ${SMTP_PORT:-587}
-  SMTP_USER: ${SMTP_USER}      # username if required, will not authenticate if blank
-  SMTP_PASS: ${SMTP_PASS}      # password if required
-  SMTP_SECURE: ${SMTP_SECURE}  # blank for unsecure, `SMTPS` for TLS, `STARTTLS` for negotiating TLS on unsecure connection
+  SMTP_USER: ${SMTP_USER:-}      # username if required, will not authenticate if blank
+  SMTP_PASS: ${SMTP_PASS:-}      # password if required
+  SMTP_SECURE: ${SMTP_SECURE:-}  # blank for unsecure, `SMTPS` for TLS, `STARTTLS` for negotiating TLS on unsecure connection
 
 services:
 
