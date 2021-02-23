@@ -43,7 +43,7 @@ x-influxdb-api-key: &influxdb-api-key .env.influxdb
 
 x-influxdb-client-env: &influxdb-client-env
   INFLUX_BUCKET: ${INFLUX_BUCKET:-place}
-  INFLUX_HOST: ${INFLUX_HOST:-influxdb}
+  INFLUX_HOST: ${INFLUX_HOST:-http://influx:9999}
   INFLUX_ORG: ${INFLUX_ORG:-PlaceOS}
 
 x-place-loader-client-env: &place-loader-client-env
@@ -178,6 +178,7 @@ services:
     image: docker.io/placeos/source:${PLACE_SOURCE_TAG:-latest}
     restart: always
     container_name: source
+    hostname: source
     ports:
       - 127.0.0.1:8089:3000
     networks:
@@ -312,12 +313,12 @@ services:
   influxdb:
     image: quay.io/influxdb/influxdb:${INFLUXDB_IMAGE_TAG:-2.0.0-beta}
     container_name: influx
+    hostname: influx
     restart: always
     networks:
       placeos:
     ports:
       - 127.0.0.1:9999:9999
-    hostname: influx
     healthcheck:
       test: influx bucket list
     volumes:
